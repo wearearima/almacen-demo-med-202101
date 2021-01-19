@@ -1,0 +1,55 @@
+description: Dada la información de una reserva (id de la farmacia, del medicamento y las unidades a reservar) para un medicamento con disponibilidad se devuelve el identificador de la reserva
+name: reservar_medicamento_disponible
+request:
+  method: POST
+  headers:
+    Content-Type: application/json
+  url: /reservas
+  body:
+    idFarmacia: 1
+    idMedicamento: 2
+    unidadesReservar: 3
+  matchers:
+    body:
+      - path: $.['idFarmacia']
+        type: by_regex
+        predefined: number
+      - path: $.['idMedicamento']
+        type: by_regex
+        ## los medicamentos del 1-9 tienen stock y los demás no
+        value: "([1-9]?)"
+      - path: $.['unidadesReservar']
+        type: by_regex
+        predefined: number
+response:
+  headers:
+    Content-Type: "application/json"
+  status: 201
+  body: 1
+
+---
+description: Dada la información de una reserva para un medicamento sin disponibilidad se devuelve BAD_REQUEST
+name: reservar_medicamento_no_disponible
+request:
+  method: POST
+  headers:
+    Content-Type: application/json
+  url: /reservas
+  body:
+    idFarmacia: 1
+    idMedicamento: 11
+    unidadesReservar: 34
+  matchers:
+    body:
+      - path: $.['idFarmacia']
+        type: by_regex
+        predefined: number
+      - path: $.['idMedicamento']
+        type: by_regex
+        ## los médicamentos del 10 en adelante no tienen stock
+        value: "[1-9][0-9]{1,}"
+      - path: $.['unidadesReservar']
+        type: by_regex
+        predefined: number
+response:
+  status: 400
