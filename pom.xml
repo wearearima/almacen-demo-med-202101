@@ -17,6 +17,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<testcontainers.version>1.15.1</testcontainers.version>
+		<spring-cloud.version>2020.0.0</spring-cloud.version>
 	</properties>
 
 	<dependencies>
@@ -62,6 +63,13 @@
 			<version>3.0.0</version>
 		</dependency>
 
+		<!-- Spring cloud contract -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-contract-verifier</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>
@@ -73,7 +81,17 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+
+			<!-- Spring cloud contract -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 		</dependencies>
+
 	</dependencyManagement>
 
 	<build>
@@ -82,7 +100,21 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<!-- Spring cloud contract -->
+			<plugin>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-contract-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<testFramework>JUNIT5</testFramework>
+					<baseClassForTests>eu.arima.mejorarTesting.almacen.ReservasBase</baseClassForTests>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+
+
 
 </project>
