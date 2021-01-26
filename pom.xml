@@ -109,7 +109,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<testFramework>JUNIT5</testFramework>
-					<baseClassForTests>eu.arima.mejorarTesting.almacen.ReservasBase</baseClassForTests>
+					<baseClassForTests>eu.arima.mejorarTesting.almacen.ReservasTestContainerBase</baseClassForTests>
 				</configuration>
 			</plugin>
 		</plugins>
